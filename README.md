@@ -35,8 +35,8 @@ target — Target IP address or domain name
 ---
 
 ## 📌 Example Output
-[+] Port 80 OPEN | HTTP/1.1 200 OK
-[+] Port 443 OPEN | Banner not available
+- [+] Port 80 OPEN | HTTP/1.1 200 OK
+- [+] Port 443 OPEN | Banner not available
 
 ---
 
@@ -97,8 +97,8 @@ hedef — Hedef IP Adres yada alan adı
 ---
 
 #### 📌 Örnek Çıktı
-[+] Port 80 OPEN | HTTP/1.1 200 OK
-[+] Port 443 OPEN | Banner not available
+- [+] Port 80 OPEN | HTTP/1.1 200 OK
+- [+] Port 443 OPEN | Banner not available
 
 ---
 
