@@ -11,6 +11,7 @@ This project is designed for beginners who want to learn basic networking concep
 - Basic banner grabbing
 - Command-line interface (CLI)
 - Clean and readable Python code
+- Multithreaded scanning for better performance
 
 ---
 
@@ -21,16 +22,20 @@ This project is designed for beginners who want to learn basic networking concep
 ---
 
 ## ⚙️ Usage
-python scanner.py target -p 1-1000 -t 1
+python scanner.py target -p 1-65535 -t 1 -T 100
 
 ---
 
 ## Arguments
 target — Target IP address or domain name
 
--p, --ports — Port range to scan (default: 1-1024)
+-h, --help — Show the help message
+
+-p, --ports — Port range to scan (default: 21, 22, 23, 25, 53, 80, 110, 111, 135, 139, 143, 443, 445, 993, 995, 1723, 3306, 3389, 5900, 8080, 8443, 8000, 8888)
 
 -t, --timeout — Connection timeout in seconds (default: 1)
+
+-T, --threads — Number of threads to use (default: 100)
 
 ---
 
@@ -48,7 +53,6 @@ The author is not responsible for any misuse.
 ---
 
 ## 🔧 Future Improvements
-- Multithreaded scanning for better performance
 - JSON / CSV output support
 - Service name detection
 - UDP port scanning
@@ -68,12 +72,14 @@ Ağ temellerini, socket programlamayı ve giriş seviyesi siber güvenlik / pene
 ---
 
 #### 🚀 Özellikler
+- Daha iyi performans için çoklu iş parçacığı (multithreaded) tarama
 - TCP port tarama
 - Özel port aralığı desteği
 - Ayarlanabilir timeout süresi
 - Basit banner grabbing
 - Komut satırı (CLI) desteği
 - Temiz ve okunabilir Python kodu
+
 ---
 
 #### 🛠️ Gereklilikler
@@ -83,16 +89,20 @@ Ağ temellerini, socket programlamayı ve giriş seviyesi siber güvenlik / pene
 ---
 
 #### ⚙️ Kullanım
-python scanner.py hedef -p 1-1000 -t 1
+python scanner.py hedef -p 1-1000 -t 1 -T 100
 
 ---
 
 #### Argümanlar
 hedef — Hedef IP Adres yada alan adı
 
--p, --ports — Taranıcak Port Aralığı (Varsayılan: 1-1024)
+-h, --help — Yardım mesajını gösterir
+
+-p, --ports — Taranıcak port aralığı (varsayılan: 21, 22, 23, 25, 53, 80, 110, 111, 135, 139, 143, 443, 445, 993, 995, 1723, 3306, 3389, 5900, 8080, 8443, 8000, 8888)
 
 -t, --timeout — Zaman aşımı süresi (saniye, varsayılan: 1)
+
+-T, --threads — Kullanılacak iş parçacığı sayısı (varsayılan: 100)
 
 ---
 
@@ -110,7 +120,6 @@ Her türlü yanlış veya kötüye kullanımın sorumluluğu kullanıcıya aitti
 ---
 
 #### 🔧 Gelecekteki Geliştirmeler
-- Daha iyi performans için çoklu iş parçacığı (multithreaded) tarama
 - JSON / CSV çıktı desteği
 - Servis adı tespiti
 - UDP port tarama

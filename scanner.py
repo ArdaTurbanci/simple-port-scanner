@@ -1,6 +1,7 @@
 import socket
 import argparse
 from datetime import datetime
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # Commonly used TCP ports
 # Yaygın TCP portları
@@ -25,11 +26,13 @@ def scan_port(target, port, timeout):
         # Port açık mı kontrol et
         if sock.connect_ex((target, port)) == 0:
             banner = get_banner(sock)
-            print(f"[+] Port {port} OPEN | {banner}")
+            return f"[+] Port {port} OPEN | {banner}"
 
         sock.close()
     except:
         pass
+
+    return None
 
 
 def get_banner(sock):
@@ -47,8 +50,8 @@ def get_banner(sock):
 
 def parse_ports(port_range):
     """
-    Parses a port range string (e.g. 1-1000) and returns a list of ports.
-    Port aralığı stringini (örn: 1-1000) ayrıştırır ve port listesini döndürür.
+    Parses a port range string (e.g. 1-1000).
+    Port aralığını ayrıştırır (örn: 1-1000).
     """
     try:
         start, end = port_range.split("-")
@@ -60,30 +63,37 @@ def parse_ports(port_range):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Simple TCP Port Scanner / Basit TCP Port Tarayıcı"
+        description="TCP Port Scanner (Default ports)"
     )
 
     parser.add_argument(
         "target",
-        help="Target IP address or domain name / Hedef IP adresi veya alan adı"
+        help="Target IP address or domain name"
     )
 
     parser.add_argument(
         "-p", "--ports",
-        help="Port range to scan (e.g. 1-1000). If not provided, common ports will be scanned. / Taranacak port aralığı (örn: 1-1000). Belirtilmezse yaygın portlar taranır."
+        help="Port range to scan (e.g. 1-1000). If not provided, common ports will be scanned."
     )
 
     parser.add_argument(
         "-t", "--timeout",
         type=float,
         default=1,
-        help="Connection timeout in seconds (default: 1) / Bağlantı zaman aşımı süresi (saniye, varsayılan: 1)"
+        help="Connection timeout in seconds (default: 1)"
+    )
+
+    parser.add_argument(
+        "-T", "--threads",
+        type=int,
+        default=100,
+        help="Number of threads to use (default: 100)"
     )
 
     args = parser.parse_args()
 
-    # Use custom port range if provided, otherwise use common ports
-    # Kullanıcı port aralığı verdiyse onu kullan, yoksa yaygın portları kullan
+    # Select ports
+    # Portları belirle
     if args.ports:
         ports = parse_ports(args.ports)
         print("[*] Using custom port range / Özel port aralığı kullanılıyor")
@@ -91,14 +101,22 @@ def main():
         ports = COMMON_PORTS
         print("[*] Using common ports / Yaygın portlar kullanılıyor")
 
-    print("-" * 50)
+    print("-" * 60)
     print(f"Target / Hedef: {args.target}")
-    print(f"Scan started at / Tarama başlangıç zamanı: {datetime.now()}")
-    print(f"Number of ports to scan / Taranacak port sayısı: {len(ports)}")
-    print("-" * 50)
+    print(f"Scan started at / Tarama başlangıcı: {datetime.now()}")
+    print(f"Ports to scan / Taranacak port sayısı: {len(ports)}")
+    print(f"Threads / İş parçacığı sayısı: {args.threads}")
+    print("-" * 60)
 
-    for port in ports:
-        scan_port(args.target, port, args.timeout)
+    # Multithreaded scanning
+    # Çoklu iş parçacığı ile tarama
+    with ThreadPoolExecutor(max_workers=args.threads) as executor:
+        futures = [executor.submit(scan_port, args.target, port, args.timeout) for port in ports]
+
+        for future in as_completed(futures):
+            result = future.result()
+            if result:
+                print(result)
 
 
 if __name__ == "__main__":
