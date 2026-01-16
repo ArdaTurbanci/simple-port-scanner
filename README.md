@@ -9,10 +9,11 @@ This project is designed for beginners who want to learn basic networking concep
 
 ---
 
-![Terminal](assets/Terminal.png)
+## Terminal Output
+![TerminalOutput](assets/TerminalOutput.png)
 
 ---
-
+## JSON Output
 ![JSONOutput](assets/JSONOutput.png)
 
 ---
@@ -118,6 +119,15 @@ This project is licensed under the MIT License.
 ### 🔍 Basit Port Tarayıcı (Python)
 Python ile yazılmış basit ve öğretici bir TCP-UDP port tarayıcıdır.
 Ağ temellerini, socket programlamayı ve giriş seviyesi siber güvenlik / penetrasyon testi kavramlarını öğrenmek isteyenler için hazırlanmıştır.
+
+---
+
+## Terminal Çıktı
+![TerminalOutput](assets/TerminalOutput.png)
+
+---
+## JSON Çıktı
+![JSONOutput](assets/JSONOutput.png)
 
 ---
 
