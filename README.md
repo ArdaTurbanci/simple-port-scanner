@@ -1,25 +1,46 @@
 # 🔍 Simple Port Scanner (Python)
-A simple and educational TCP port scanner written in Python.  
+
+A simple and educational TCP-UDP port scanner written in Python.  
 This project is designed for beginners who want to learn basic networking concepts, socket programming, and introductory penetration testing techniques.
 
 ---
 
 ## 🚀 Features
 - TCP port scanning
+- UDP port scanning
 - Custom port range support
 - Configurable timeout
-- Basic banner grabbing
+- Multithreaded scanning for better performance
+- Service name detection (standard ports)
+- Improved banner grabbing (HTTP & non-HTTP)
 - Command-line interface (CLI)
 - Clean and readable Python code
-- Multithreaded scanning for better performance
 - JSON output support
-
 
 ---
 
-## ⚠️ Warning  
+## ⚠️ Warning
 Using a high number of threads may significantly increase scan speed, but it can also trigger firewalls, intrusion detection systems (IDS/IPS), or cause network instability.  
 It is recommended to use a moderate number of threads (e.g., 50–200) and only scan systems you own or have explicit permission to test.
+
+## Why UDP Is Unreliable for Port Scanning
+
+- UDP (User Datagram Protocol) is inherently unreliable for generic port scanning.
+- Unlike TCP, UDP is connectionless and does not provide a built-in handshake or acknowledgment mechanism.
+- This makes it impossible to reliably determine port state using simple request–response logic.
+
+## TCP vs UDP: Fundamental Difference
+- TCP
+ - Uses a 3-way handshake (SYN → SYN/ACK → ACK)
+ - Clear and deterministic port states:
+ - Open
+ - Closed
+ - Filtered
+- UDP
+ - No handshake
+ - No guaranteed response
+ - Silence is ambiguous
+As a result, no response from a UDP port does NOT mean the port is open.
 
 ---
 
@@ -30,7 +51,7 @@ It is recommended to use a moderate number of threads (e.g., 50–200) and only 
 ---
 
 ## ⚙️ Usage
-python scanner.py target -p 1-65535 -t 1 -T 100 -o output.json
+python scanner.py target -p 1-65535 -t 1 -T 100 --udp -o output.json
 
 ---
 
@@ -45,13 +66,16 @@ target — Target IP address or domain name
 
 -T, --threads — Number of threads to use (default: 100)
 
--o, --output — Output JSON file name (default:scan_result.json)
+-o, --output — Output JSON file name
+
+--udp — Enable UDP port scanning
 
 ---
 
 ## 📌 Example Output
-- [+] Port 80 OPEN | HTTP/1.1 200 OK
-- [+] Port 443 OPEN | Banner not available
+- [+] TCP 80 OPEN | http | HTTP/1.1 200 OK
+- [+] TCP 22 OPEN | ssh | Banner not available
+- [+] UDP 53 OPEN | domain | No response
 
 ---
 
@@ -62,30 +86,25 @@ The author is not responsible for any misuse.
 
 ---
 
-## 🔧 Future Improvements
-- Service name detection
-- UDP port scanning
-- Improved banner grabbing
-
----
-
 ## 📜 License
 This project is licensed under the MIT License.
 
 ---
 
 ### 🔍 Basit Port Tarayıcı (Python)
-Python ile yazılmış basit ve öğretici bir TCP port tarayıcıdır.
+Python ile yazılmış basit ve öğretici bir TCP-UDP port tarayıcıdır.
 Ağ temellerini, socket programlamayı ve giriş seviyesi siber güvenlik / penetrasyon testi kavramlarını öğrenmek isteyenler için hazırlanmıştır.
 
 ---
 
 #### 🚀 Özellikler
-- Daha iyi performans için çoklu iş parçacığı (multithreaded) tarama
 - TCP port tarama
+- UDP port tarama
 - Özel port aralığı desteği
 - Ayarlanabilir timeout süresi
-- Basit banner grabbing
+- Çoklu iş parçacığı (multithreaded) tarama
+- Servis adı tespiti (standart portlar)
+- Geliştirilmiş banner grabbing
 - Komut satırı (CLI) desteği
 - Temiz ve okunabilir Python kodu
 - JSON çıktı desteği
@@ -97,6 +116,23 @@ Ağ temellerini, socket programlamayı ve giriş seviyesi siber güvenlik / pene
 Yüksek sayıda iş parçacığı (thread) kullanımı tarama hızını ciddi şekilde artırabilir; ancak güvenlik duvarlarını, saldırı tespit/önleme sistemlerini (IDS/IPS) tetikleyebilir veya ağ kararsızlığına neden olabilir.  
 Genellikle orta seviyede bir thread sayısı (örn. 50–200) kullanılması ve yalnızca sahibi olduğunuz veya açık izniniz bulunan sistemlerin taranması önerilir.
 
+## UDP Port Taramasının Neden Güvenilir Olmadığı
+- UDP (User Datagram Protocol), genel amaçlı port taraması için doğası gereği güvenilir değildir.
+- TCP’nin aksine UDP bağlantısızdır (connectionless) ve yerleşik bir el sıkışma (handshake) veya onay (acknowledgment) mekanizması sunmaz.
+- Bu durum, basit istek–cevap mantığıyla bir UDP portunun durumunu güvenilir şekilde belirlemeyi imkânsız hale getirir.
+## TCP vs UDP: Temel Farklar
+- TCP
+ - 3 aşamalı el sıkışma (SYN → SYN/ACK → ACK) kullanır
+ - Net ve deterministik port durumları vardır:
+ - Açık (Open)
+ - Kapalı (Closed)
+ - Filtrelenmiş (Filtered)
+- UDP
+ - El sıkışma yoktur
+ - Cevap garantisi yoktur
+ - Sessizlik belirsizdir
+Sonuç olarak, bir UDP portundan cevap alınmaması portun açık olduğu anlamına gelmez.
+
 ---
 
 #### 🛠️ Gereklilikler
@@ -106,7 +142,7 @@ Genellikle orta seviyede bir thread sayısı (örn. 50–200) kullanılması ve 
 ---
 
 #### ⚙️ Kullanım
-python scanner.py hedef -p 1-1000 -t 1 -T 100 -o çıktı.json
+python scanner.py hedef -p 1-1000 -t 1 -T 100 --udp -o çıktı.json
 
 ---
 
@@ -121,13 +157,16 @@ hedef — Hedef IP Adres yada alan adı
 
 -T, --threads — Kullanılacak iş parçacığı sayısı (varsayılan: 100)
 
--o, --output — JSON uzantılı çıktı dosyasının ismi (varsayılan:scan_result.json)
+-o, --output — JSON uzantılı çıktı dosyasının ismi
+
+--udp — UDP port taramasını aktif eder
 
 ---
 
 #### 📌 Örnek Çıktı
-- [+] Port 80 OPEN | HTTP/1.1 200 OK
-- [+] Port 443 OPEN | Banner not available
+- [+] TCP 80 OPEN | http | HTTP/1.1 200 OK
+- [+] TCP 22 OPEN | ssh | Banner not available
+- [+] UDP 53 OPEN | domain | No response
 
 ---
 
@@ -135,13 +174,6 @@ hedef — Hedef IP Adres yada alan adı
 Bu araç yalnızca eğitim amaçlıdır.
 Yalnızca sahibi olduğunuz veya test etmek için açık izniniz bulunan sistemlerde kullanınız.
 Her türlü yanlış veya kötüye kullanımın sorumluluğu kullanıcıya aittir.
-
----
-
-#### 🔧 Gelecekteki Geliştirmeler
-- Servis adı tespiti
-- UDP port tarama
-- Geliştirilmiş banner alma (banner grabbing)
 
 ---
 
