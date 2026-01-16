@@ -9,6 +9,14 @@ This project is designed for beginners who want to learn basic networking concep
 
 ---
 
+![Terminal](assets/Terminal.png)
+
+---
+
+![JSONOutput](assets/JSONOutput.png)
+
+---
+
 ## 🚀 Features
 - TCP port scanning
 - UDP port scanning
