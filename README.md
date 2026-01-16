@@ -1,5 +1,9 @@
 # 🔍 Simple Port Scanner (Python)
 
+![Python](https://img.shields.io/badge/python-3.11-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Status](https://img.shields.io/badge/status-active-success)
+
 A simple and educational TCP-UDP port scanner written in Python.  
 This project is designed for beginners who want to learn basic networking concepts, socket programming, and introductory penetration testing techniques.
 
@@ -50,8 +54,20 @@ As a result, no response from a UDP port does NOT mean the port is open.
 
 ---
 
+## Installation
+
+```bash
+git clone https://github.com/ArdaTurbanci/simple-port-scanner.git
+cd simple-port-scanner
+```
+
+---
+
 ## ⚙️ Usage
+
+```bash
 python scanner.py target -p 1-65535 -t 1 -T 100 --udp -o output.json
+```
 
 ---
 
@@ -141,8 +157,20 @@ Sonuç olarak, bir UDP portundan cevap alınmaması portun açık olduğu anlam�
 
 ---
 
+## Kurulum
+
+```bash
+git clone https://github.com/ArdaTurbanci/simple-port-scanner.git
+cd simple-port-scanner
+```
+
+---
+
 #### ⚙️ Kullanım
+
+```bash
 python scanner.py hedef -p 1-1000 -t 1 -T 100 --udp -o çıktı.json
+```
 
 ---
 
