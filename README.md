@@ -12,6 +12,14 @@ This project is designed for beginners who want to learn basic networking concep
 - Command-line interface (CLI)
 - Clean and readable Python code
 - Multithreaded scanning for better performance
+- JSON output support
+
+
+---
+
+## ⚠️ Warning  
+Using a high number of threads may significantly increase scan speed, but it can also trigger firewalls, intrusion detection systems (IDS/IPS), or cause network instability.  
+It is recommended to use a moderate number of threads (e.g., 50–200) and only scan systems you own or have explicit permission to test.
 
 ---
 
@@ -22,7 +30,7 @@ This project is designed for beginners who want to learn basic networking concep
 ---
 
 ## ⚙️ Usage
-python scanner.py target -p 1-65535 -t 1 -T 100
+python scanner.py target -p 1-65535 -t 1 -T 100 -o output.json
 
 ---
 
@@ -36,6 +44,8 @@ target — Target IP address or domain name
 -t, --timeout — Connection timeout in seconds (default: 1)
 
 -T, --threads — Number of threads to use (default: 100)
+
+-o, --output — Output JSON file name (default:scan_result.json)
 
 ---
 
@@ -53,7 +63,6 @@ The author is not responsible for any misuse.
 ---
 
 ## 🔧 Future Improvements
-- JSON / CSV output support
 - Service name detection
 - UDP port scanning
 - Improved banner grabbing
@@ -79,6 +88,14 @@ Ağ temellerini, socket programlamayı ve giriş seviyesi siber güvenlik / pene
 - Basit banner grabbing
 - Komut satırı (CLI) desteği
 - Temiz ve okunabilir Python kodu
+- JSON çıktı desteği
+
+
+---
+
+## ⚠️ Uyarı  
+Yüksek sayıda iş parçacığı (thread) kullanımı tarama hızını ciddi şekilde artırabilir; ancak güvenlik duvarlarını, saldırı tespit/önleme sistemlerini (IDS/IPS) tetikleyebilir veya ağ kararsızlığına neden olabilir.  
+Genellikle orta seviyede bir thread sayısı (örn. 50–200) kullanılması ve yalnızca sahibi olduğunuz veya açık izniniz bulunan sistemlerin taranması önerilir.
 
 ---
 
@@ -89,7 +106,7 @@ Ağ temellerini, socket programlamayı ve giriş seviyesi siber güvenlik / pene
 ---
 
 #### ⚙️ Kullanım
-python scanner.py hedef -p 1-1000 -t 1 -T 100
+python scanner.py hedef -p 1-1000 -t 1 -T 100 -o çıktı.json
 
 ---
 
@@ -103,6 +120,8 @@ hedef — Hedef IP Adres yada alan adı
 -t, --timeout — Zaman aşımı süresi (saniye, varsayılan: 1)
 
 -T, --threads — Kullanılacak iş parçacığı sayısı (varsayılan: 100)
+
+-o, --output — JSON uzantılı çıktı dosyasının ismi (varsayılan:scan_result.json)
 
 ---
 
@@ -120,7 +139,6 @@ Her türlü yanlış veya kötüye kullanımın sorumluluğu kullanıcıya aitti
 ---
 
 #### 🔧 Gelecekteki Geliştirmeler
-- JSON / CSV çıktı desteği
 - Servis adı tespiti
 - UDP port tarama
 - Geliştirilmiş banner alma (banner grabbing)
